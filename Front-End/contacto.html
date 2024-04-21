@@ -1,35 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewoirt" content="width=device-width, initial-scale=1.0">
-        <title>TAF</title>
-        <link rel="shortcut icon" type="image/x-icon" href="./Logo.ico">
-        <link rel="stylesheet" href="./style-contacto.css">
-    </head>
-    <body>
-        <form class="form" id="forms">
-            <div class="form_container">
-                <h2 class="form_title">Contáctame</h2>
-                <input type="text" class="form__input" placeholder="Nombre:" id="name">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAF</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./Logo.ico">
+    <link rel="stylesheet" href="./style-contacto.css">
+</head>
+<body>
+    <form class="form" id="forms">
+        <div class="form_container">
+            <h2 class="form_title">Contáctame</h2>
+            <input type="text" class="form__input" placeholder="Nombre:" id="name">
 
-                <input type="email" class="form__input" placeholder="Email:" id="email">
+            <input type="email" class="form__input" placeholder="Email:" id="email">
 
-                <textarea class="form__input form__input--message" placeholder="Mensaje"></textarea>           
-            
-                <input type="submit" value="Enviar" class="form_cta">
-                <p class="warnings" id="warnings"></p>
+            <textarea class="form__input form__input--message" placeholder="Mensaje"></textarea>           
+        
+            <input type="submit" value="Enviar" class="form_cta">
+            <p class="warnings" id="warnings"></p>
 
-                <div class="iconos">
-                    <p><b>Tu Asesor Financiero</b></p>
-                    <a href="#"><img src="./FacebookBlack.png" alt="Facebook" width="30px" height="30px"></a>
-                    <a href="#"><img src="./InstagramBlack.png" alt="Instagram" width="30px" height="30px"></a>
-                    <a href="#"><img src="./LinkedinBlack.png" alt="Linkedin" width="30px" height="30px" >
-                    <a href="#"><img src="./TwitterBlack.png" alt="Twitter" width="30px" height="30px"></a>
-                </div>
-                
+            <div class="iconos">
+                <p><b>Tu Asesor Financiero</b></p>
+                <a href="#"><img src="./FacebookBlack.png" alt="Facebook" width="30px" height="30px"></a>
+                <a href="#"><img src="./InstagramBlack.png" alt="Instagram" width="30px" height="30px"></a>
+                <a href="#"><img src="./LinkedinBlack.png" alt="Linkedin" width="30px" height="30px" >
+                <a href="#"><img src="./TwitterBlack.png" alt="Twitter" width="30px" height="30px"></a>
             </div>
-        </form>
-        <script src="app.js"></script>
-    </body>
+            
+        </div>
+    </form>
+    <script>
+        const forms = document.getElementById("forms");
+        const nombre = document.getElementById("name");
+        const email = document.getElementById("email");
+        const parrafo = document.getElementById("warnings");
+
+        forms.addEventListener("submit", e => {
+            e.preventDefault();
+            let warnings = "";
+            let entrar = false;
+            let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+            if (nombre.value.length < 6) {
+                warnings += 'El nombre no es válido <br>';
+                entrar = true;
+            }
+            if (!regexEmail.test(email.value)) {
+                warnings += 'El Email no es válido <br>';
+                entrar = true;
+            }
+
+            if (entrar) {
+                parrafo.innerHTML = warnings;
+            } else {
+                // Simulación de envío exitoso del correo
+                mostrarMensaje("¡Correo enviado!");
+            }
+        });
+
+        function mostrarMensaje(mensaje) {
+        // Restablecer el contenido del párrafo de advertencia a una cadena vacía
+            parrafo.innerHTML = "";
+
+        // Crear un elemento de mensaje
+        const mensajeElemento = document.createElement("div");
+        mensajeElemento.textContent = mensaje;
+        mensajeElemento.classList.add("mensaje-enviado");
+
+        // Agregar el mensaje al DOM
+        forms.appendChild(mensajeElemento);
+
+        // Eliminar el mensaje después de 3 segundos
+        setTimeout(() => {
+        mensajeElemento.remove();
+        }, 3000);
+
+
+        }
+    </script>
+</body>
 </html>
